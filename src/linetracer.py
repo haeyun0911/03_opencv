@@ -18,8 +18,13 @@ if cap .isOpened():
             if key == ord('q') or key == ord('Q'):
                 break
             elif key  == ord('s') or key == ord('S'):
-                cv2.imwrite('C:/Users/405/projects/opencv_tutorial/03_opencv/img/capture.jpg', img)
+                cv2.imwrite('C:/Users/405/projects/opencv_tutorial/03_opencv/img/capture.jpg', gray_img)
                 print('사진저장됨')
+                hist = cv2.calcHist([gray_img], [0], None, [256], [0, 256])
+                plt.clf()
+                plt.plot(hist)
+                plt.show(block=False)
+                plt.pause(0.001)
         else:
             print('no frame')
             break
