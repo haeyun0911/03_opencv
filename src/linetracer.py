@@ -12,7 +12,7 @@ if cap .isOpened():
         if ret:
             key = cv2.waitKey(1)
             gray_img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-            equal_img = cv2.equalizeHist(gray_img)
+            equal_img = cv2.calcHist(gray_img)
             cv2.imshow('Original Camera Feed', img)
             cv2.imshow('Equalized Histogram Feed', equal_img)
             if key == ord('q') or key == ord('Q'):
