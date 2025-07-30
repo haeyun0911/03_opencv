@@ -1,6 +1,16 @@
 import cv2
 import numpy as np
-import matplotlib.pylab as plt
+
+def draw_histogram(image):
+    hist = cv2.calcHist([image], [0], None, [256], [0,256])
+    hist_img = np.full((300,256), 255, dtype=np.uint8)
+
+    cv2.normalize(hist, hist, 0, 300, cv2.NORM_MINMAX)
+
+    for x, y in enumerate(hist):
+        cv2.line(hist_img, (x, 300), (x, 300-int(y)), 0)
+
+    return hist_img
 
 cap = cv2.VideoCapture(0)
 
@@ -20,16 +30,9 @@ if cap .isOpened():
             elif key  == ord('s') or key == ord('S'):
                 cv2.imwrite('C:/Users/405/projects/opencv_tutorial/03_opencv/img/capture.jpg', gray_img)
                 print('사진저장됨')
-                hist = cv2.calcHist([gray_img], [0], None, [256], [0, 256])
-                plt.figure()
-                plt.title("Histogram")
-                plt.xlabel("Pixel Value")
-                plt.ylabel("Frequency")
-                plt.plot(hist, color='black')
-                plt.xlim([0,256])
-                plt.grid(True)
-                plt.show(block=False)
-                plt.pause(0.001)
+
+                hist_img = draw_histogram(gray_img)
+                cv2.imshow('Histogram', hist_img)
         else:
             print('no frame')
             break
