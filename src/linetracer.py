@@ -1,6 +1,7 @@
 import cv2
 import numpy as np
 
+#opencv로 히스토그램 출력 코드
 def draw_histogram(image):
     hist = cv2.calcHist([image], [0], None, [256], [0,256])
     hist_img = np.full((300,256), 255, dtype=np.uint8)
@@ -13,9 +14,10 @@ def draw_histogram(image):
     return hist_img
 
 cap = cv2.VideoCapture(0)
-
+# 캠 창 크기 
 cap.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
 cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
+#ROI 좌표 설정
 x, y, w, h = 0, 0, 640, 320
 
 if cap.isOpened():
@@ -53,10 +55,12 @@ if cap.isOpened():
 
         # 최종 출력
         cv2.imshow('Equalized with ROI and Contour', equal_color)
-
+        
+        # q키 입력시 종료
         if key == ord('q') or key == ord('Q'):
             break
-
+        
+        # s키 입력시 캡쳐
         elif key == ord('s') or key == ord('S'):
             roi_gray = gray_img[y:y+h, x:x+w]
             cv2.imwrite('C:/Users/405/projects/opencv_tutorial/03_opencv/img/capture.jpg', roi_gray)
