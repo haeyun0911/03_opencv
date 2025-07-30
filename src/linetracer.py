@@ -24,14 +24,13 @@ if cap .isOpened():
             key = cv2.waitKey(1)
             gray_img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
             equal_img = cv2.equalizeHist(gray_img)
-            roi = img[y:y+h, x:x+w]
-            roi_gray=gray_img[y:y+h, x:x+w]
             cv2.imshow('Original Camera Feed', img)
             cv2.imshow('Equalized Histogram Feed', equal_img)
-            cv2.imshow('ROI View', roi)
+            cv2.rectangle(img, (x, y), (x + w, y + h), (0, 0, 255), 2)
             if key == ord('q') or key == ord('Q'):
                 break
             elif key  == ord('s') or key == ord('S'):
+                roi_gray=gray_img[y:y+h, x:x+w]
                 cv2.imwrite('C:/Users/405/projects/opencv_tutorial/03_opencv/img/capture.jpg', roi_gray)
                 print('사진저장됨')
 
