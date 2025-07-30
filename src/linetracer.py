@@ -33,7 +33,7 @@ if cap .isOpened():
                 contour = contours[0]
                 epsilon = 0.05*cv2.arcLength(contour, True)
                 approx = cv2.approxPolyDP(contour, epsilon, True)
-                
+
                 cv2.drawContours(img2, [approx], -1, (0,0,255), 2)
 
 
@@ -41,6 +41,7 @@ if cap .isOpened():
 
             cv2.imshow('Original Camera Feed', img)
             cv2.imshow('Equalized Histogram Feed', equal_img)
+            cv2.imshow('Approximation', img2)
             if key == ord('q') or key == ord('Q'):
                 break
             elif key  == ord('s') or key == ord('S'):
