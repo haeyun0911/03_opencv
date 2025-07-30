@@ -7,8 +7,8 @@ def draw_histogram(image):
 
     cv2.normalize(hist, hist, 0, 300, cv2.NORM_MINMAX)
 
-    for x, y in enumerate(hist):
-        cv2.line(hist_img, (x, 300), (x, 300-int(y)), 0)
+    for a, b in enumerate(hist):
+        cv2.line(hist_img, (a, 300), (a, 300-int(b)), 0)
 
     return hist_img
 
@@ -19,16 +19,20 @@ cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
 if cap .isOpened():
     while True:
         ret, img = cap.read()
+        x=0; y= 0; w=640; h = 320
         if ret:
             key = cv2.waitKey(1)
             gray_img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
             equal_img = cv2.equalizeHist(gray_img)
+            roi = img[y:y+h, x:x+w]
+            roi_gray=gray_img[y:y+h, x:x+w]
             cv2.imshow('Original Camera Feed', img)
             cv2.imshow('Equalized Histogram Feed', equal_img)
+            cv2.imshow('ROI View', roi)
             if key == ord('q') or key == ord('Q'):
                 break
             elif key  == ord('s') or key == ord('S'):
-                cv2.imwrite('C:/Users/405/projects/opencv_tutorial/03_opencv/img/capture.jpg', gray_img)
+                cv2.imwrite('C:/Users/405/projects/opencv_tutorial/03_opencv/img/capture.jpg', roi_gray)
                 print('사진저장됨')
 
                 hist_img = draw_histogram(gray_img)
