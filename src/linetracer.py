@@ -24,9 +24,10 @@ if cap .isOpened():
             key = cv2.waitKey(1)
             gray_img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
             equal_img = cv2.equalizeHist(gray_img)
+            cv2.rectangle(img, (x, y), (x + w, y + h), (0, 0, 255), 2)
+            
             cv2.imshow('Original Camera Feed', img)
             cv2.imshow('Equalized Histogram Feed', equal_img)
-            cv2.rectangle(img, (x, y), (x + w, y + h), (0, 0, 255), 2)
             if key == ord('q') or key == ord('Q'):
                 break
             elif key  == ord('s') or key == ord('S'):
