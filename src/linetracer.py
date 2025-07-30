@@ -16,16 +16,29 @@ cap = cv2.VideoCapture(0)
 
 cap.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
 cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
+x=0; y= 0; w=640; h = 320
 if cap .isOpened():
     while True:
         ret, img = cap.read()
-        x=0; y= 0; w=640; h = 320
+
         if ret:
             key = cv2.waitKey(1)
+            img2 = img.copy()
             gray_img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+            thresh_val, th=cv2.threshold(gray_img, 127, 255, cv2.THRESH_BINARY)
             equal_img = cv2.equalizeHist(gray_img)
+
+            contours, hierarchy = cv2.findContours(th, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+            if contours:
+                contour = contours[0]
+                epsilon = 0.05*cv2.arcLength(contour, True)
+                approx = cv2.approxPolyDP(contour, epsilon, True)
+                
+                cv2.drawContours(img2, [approx], -1, (0,0,255), 2)
+
+
             cv2.rectangle(img, (x, y), (x + w, y + h), (0, 0, 255), 2)
-            
+
             cv2.imshow('Original Camera Feed', img)
             cv2.imshow('Equalized Histogram Feed', equal_img)
             if key == ord('q') or key == ord('Q'):
