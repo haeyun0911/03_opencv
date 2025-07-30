@@ -10,7 +10,6 @@ if cap .isOpened():
     while True:
         ret, img = cap.read()
         if ret:
-            cv2.imshow('camera', img)
             key = cv2.waitKey(1)
             gray_img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
             equal_img = cv2.equalizeHist(gray_img)
